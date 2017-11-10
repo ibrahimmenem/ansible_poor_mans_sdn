@@ -1,0 +1,17 @@
+---
+- hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: setup ip on interfaces
+      ios_config:
+        lines:
+          - "ip address {{ item.ip }} {{ item.mask }}"
+          - no shutdown
+        parents: "interface {{ item.iface_name }}"
+        #save_when: modified  # new in ansible 2.4
+      with_items: "{{ interfaces }}"
+    - name : save
+      ios_command: 
+        commands: 
+          - "wr"

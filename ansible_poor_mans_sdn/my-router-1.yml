@@ -1,0 +1,8 @@
+---
+- items:
+  - iface_name: GigabitEthernet2
+    ip: 172.32.1.1
+    mask: 255.255.255.0
+  - iface_name: GigabitEthernet3
+    ip: 172.31.1.1
+    mask: 255.255.255.0
