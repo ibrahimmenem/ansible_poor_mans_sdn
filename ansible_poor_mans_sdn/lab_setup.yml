@@ -11,6 +11,14 @@
         parents: "interface {{ item.iface_name }}"
         #save_when: modified  # new in ansible 2.4
       with_items: "{{ interfaces }}"
+    
+    - name: setup static routes
+      ios_static_route:
+        prefix: "{{ item.prefix }}"
+        mask: "{{ item.mask }}"
+        next_hop: "{{ item.next_hop }}"
+      with_items: "{{ static_routes }}"
+
     - name : save
       ios_command: 
         commands: 

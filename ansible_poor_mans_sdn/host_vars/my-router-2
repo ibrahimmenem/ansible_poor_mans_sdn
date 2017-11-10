@@ -9,5 +9,10 @@ interfaces:
    - iface_name: GigabitEthernet4
      ip: 172.20.0.2
      mask: 255.255.255.0
+static_routes:
+   - description: route to my-router-1 via others-router
+     prefix: 172.19.0.0
+     mask: 255.255.255.0
+     next_hop: 172.20.0.3
 
 

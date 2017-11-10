@@ -6,5 +6,6 @@ interfaces:
    - iface_name: GigabitEthernet3
      ip: 172.20.0.3
      mask: 255.255.255.0
+static_routes: []
 
 
