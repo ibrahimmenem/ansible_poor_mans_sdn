@@ -1,0 +1,19 @@
+---
+- hosts: my_routers
+  gather_facts: no
+
+  tasks:
+    - name: load defined paths
+      include_vars:
+        file: paths.yml
+        name: paths
+
+    - name: remove old path
+      ios_config:
+        lines:
+            - "no ip route {{paths[new_path][inventory_hostname]['prefix']}} {{paths[new_path][inventory_hostname]['mask']}}"
+    - name: set path
+      ios_static_route:
+        prefix : "{{ paths[new_path][inventory_hostname]['prefix'] }}"
+        mask: "{{ paths[new_path][inventory_hostname]['mask'] }}"
+        next_hop: "{{ paths[new_path][inventory_hostname]['next_hop'] }}"
