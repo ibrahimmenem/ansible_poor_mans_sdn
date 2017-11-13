@@ -1,6 +1,7 @@
 ---
 - hosts: all
   gather_facts: no
+  connection: local
 
   tasks:
     - name: setup ip on interfaces
@@ -9,6 +10,7 @@
           - "ip address {{ item.ip }} {{ item.mask }}"
           - no shutdown
         parents: "interface {{ item.iface_name }}"
+        authorize: yes
         #save_when: modified  # new in ansible 2.4
       with_items: "{{ interfaces }}"
     
@@ -17,6 +19,7 @@
         prefix: "{{ item.prefix }}"
         mask: "{{ item.mask }}"
         next_hop: "{{ item.next_hop }}"
+        authorize: yes
       with_items: "{{ static_routes }}"
 
     - name : save

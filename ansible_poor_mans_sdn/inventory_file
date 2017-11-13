@@ -5,7 +5,6 @@ my-router-2
 [my_routers:vars]
 ansible_user=ibra
 ansible_ssh_pass=ibra
-ansible_connection=local
 
 [others_router]
 others-router 
@@ -13,4 +12,3 @@ others-router
 [others_router:vars]
 ansible_user=ibra
 ansible_ssh_pass=ibra
-ansible_connection=local

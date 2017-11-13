@@ -1,19 +1,42 @@
 ---
 - hosts: my_routers
   gather_facts: no
+  connection: local
 
   tasks:
+    # load all paths parameters into `paths` variable  
     - name: load defined paths
       include_vars:
         file: paths.yml
         name: paths
 
-    - name: remove old path
-      ios_config:
-        lines:
-            - "no ip route {{paths[new_path][inventory_hostname]['prefix']}} {{paths[new_path][inventory_hostname]['mask']}}"
-    - name: set path
-      ios_static_route:
-        prefix : "{{ paths[new_path][inventory_hostname]['prefix'] }}"
-        mask: "{{ paths[new_path][inventory_hostname]['mask'] }}"
-        next_hop: "{{ paths[new_path][inventory_hostname]['next_hop'] }}"
+    # test prefered path using ping 
+    - name: test ping
+      ios_ping:
+        dest: "{{ paths[paths['prefered']][inventory_hostname]['next_hop'] }}" 
+      register: result_of_ping
+      ignore_errors: True
+
+    - set_fact: {'active_path': "{{ paths['backup'] }}"}
+      when: result_of_ping|failed
+
+    - set_fact: {'active_path': "{{ paths['prefered'] }}"}
+      when: result_of_ping|succeeded
+
+    # start a block to remove old routes and install new ones   
+    - name: remove old path and setup the new one
+      block:
+        - ios_config:
+            lines:
+              - "no ip route {{paths[active_path][inventory_hostname]['prefix']}} {{paths[active_path][inventory_hostname]['mask']}}"
+            authorize: yes
+
+        - ios_static_route:
+            prefix : "{{ paths[active_path][inventory_hostname]['prefix'] }}"
+            mask: "{{ paths[active_path][inventory_hostname]['mask'] }}"
+            next_hop: "{{ paths[active_path][inventory_hostname]['next_hop'] }}"
+            authorize: yes
+      rescue:
+        - debug:
+            msg: "An Error occured => rollback"
+      
