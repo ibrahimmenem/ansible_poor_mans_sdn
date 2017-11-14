@@ -64,26 +64,32 @@
         name: paths
 
     # test prefered path using ping 
-    - name: test ping
+    - name: test paths using ping
       ios_ping:
         dest: "{{ paths[paths['prefered']][inventory_hostname]['next_hop'] }}" 
+        count: 3
       register: result_of_ping
       ignore_errors: True
 
-    - set_fact: {'active_path': "{{ paths['backup'] }}"}
+    - name: select backup path
+      set_fact: {'active_path': "{{ paths['backup'] }}"}
       when: result_of_ping|failed
 
-    - set_fact: {'active_path': "{{ paths['prefered'] }}"}
+    - name: select prefered path
+      set_fact: {'active_path': "{{ paths['prefered'] }}"}
       when: result_of_ping|succeeded
+
     # start a block to remove old routes and install new ones   
     - name: remove old path and setup the new one
       block:
-        - ios_config:
+        - name: remove old routes
+          ios_config:
             lines:
               - "no ip route {{paths[active_path][inventory_hostname]['prefix']}} {{paths[active_path][inventory_hostname]['mask']}}"
             authorize: yes
 
-        - ios_static_route:
+        - name: setup new routes 
+          ios_static_route:
             prefix : "{{ paths[active_path][inventory_hostname]['prefix'] }}"
             mask: "{{ paths[active_path][inventory_hostname]['mask'] }}"
             next_hop: "{{ paths[active_path][inventory_hostname]['next_hop'] }}"
@@ -93,9 +99,10 @@
             msg: "An Error occured => rollback"
 ```
 @[3]
-@[6-10]
-@[12-23]
-@[26-37]
+@[7-10]
+@[12-25]
+@[17]
+@[28-44]
 ---
 ### Final tip
 - If you need to screen scrape + parse cli output. 
