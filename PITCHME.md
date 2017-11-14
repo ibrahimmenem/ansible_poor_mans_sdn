@@ -48,7 +48,6 @@
    
 ---
 ## The repo
-https://github.com/ibrahimmenem/ansible_poor_mans_sdn
 ![tree](assets/tree.png)
 
 ---
