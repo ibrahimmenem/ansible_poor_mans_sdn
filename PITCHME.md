@@ -1,5 +1,5 @@
-## Poor people's SDN using Ansible
-#### ibrahim menem SRE @CARTO
+## Poor man's SDN using Ansible
+#### ibrahim menem, SRE @CARTO
 ##### @ibrahimmenem
 
 ---
@@ -28,6 +28,9 @@
 ### GNS3 lab
 ![GNS3 lab](assets/gns3.png)
 
+---
+![DEMO](assets/ansible_sdn_demo.mp4)
+
 --- 
 #### I don't need SDN nor Ansible to do that 
 ![I want my money back](http://s2.quickmeme.com/img/50/505c395f41912a826bce46086b8bfb4129824da96a6ecbe9e3cdefb4eff7ed3d.jpg)
@@ -43,6 +46,11 @@
     - pull information from a database.
     - push information to monitoring system
    
+---
+## The repo
+https://github.com/ibrahimmenem/ansible_poor_mans_sdn
+![tree](assets/tree.png)
+
 ---
 ```yaml
 - hosts: my_routers
