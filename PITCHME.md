@@ -20,7 +20,7 @@
     - pass credentials via the command line
 ---
 ### What do I need to use Ansible with Network devices
-- Remember to use  `connection: local`
+- Remember to use  `'connection: local'`
 - Ssh access to the network deviceS
 - **(the hardest one)** Your boss and security people are happy with your work. 
 
@@ -35,6 +35,7 @@
 --- 
 [TRUE]
 - We can do that using traditional routing, vendors' active probes, etc
+
 [BUT]
 - This way we are separating our logic from forwarding elements
 - We can control different nodes from central control point
@@ -67,13 +68,6 @@
 
     - set_fact: {'active_path': "{{ paths['prefered'] }}"}
       when: result_of_ping|succeeded
-```
-@[3]
-@[6-10]
-@[12-23]
----
-
-```yaml
     # start a block to remove old routes and install new ones   
     - name: remove old path and setup the new one
       block:
@@ -91,7 +85,10 @@
         - debug:
             msg: "An Error occured => rollback"
 ```
-@[3-14]
+@[3]
+@[6-10]
+@[12-23]
+@[26-37]
 ---
 ### Final tip
 - If you need to screen scrape + parse cli output. 
