@@ -29,14 +29,21 @@
 ![GNS3 lab](assets/gns3.png)
 
 --- 
-#### WTF?
-I don't need SDN nor Ansible to do that 
-![I want my money back](https://i.imgflip.com/nslxf.jpg)
+#### I don't need SDN nor Ansible to do that 
+![I want my money back](http://s2.quickmeme.com/img/50/505c395f41912a826bce46086b8bfb4129824da96a6ecbe9e3cdefb4eff7ed3d.jpg)
 
 --- 
-- [TRUE] We can do that using traditional routing, vendors active probes, etc
-- [TRUE] this way we are separating our logic from forwarding elements
-- [TRUE] we can control different nodes from central control point
-- [TRUE]we can easily integrate with external services:
+[TRUE]
+- We can do that using traditional routing, vendors' active probes, etc
+- This way we are separating our logic from forwarding elements
+- We can control different nodes from central control point
+- We can easily integrate with external services:
     - pull information from a regional Internet registry (e.g. RIPE DB)
     - push information to monitoring system
+    
+---
+### Final tip
+If you need to screen scrape + parse cli output. Because the network device don't provide any API or is badly implemented (e.g. netconf returns the output from cli).
+Do yourself a favor and don't start parsing everything from scratch:
+- [NAPALM](https://napalm.readthedocs.io/en/latest/): already a lot of parsing and abstraction is done + great community.
+- [textfsm](https://github.com/google/textfsm): allows you to separate pasring logic from your code.
