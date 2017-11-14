@@ -13,7 +13,7 @@
 ## Ansible to the rescue
 
 - Many people don't know about Ansible's network modules
-- there are a *lot* of modules available from vendors and the community
+- There are a *lot* of modules available from vendors and the community
 [link](http://docs.ansible.com/ansible/latest/list_of_network_modules.html) 
 - Many improvements after Ansible 2.3 
     - persistent connections
@@ -28,11 +28,12 @@
 ### GNS3 lab
 ![GNS3 lab](assets/gns3.png)
 
+--- 
 #### WTF?
 I don't need SDN nor Ansible to do that 
-![I want my money back](https://imgflip.com/i/nslxf)
+![I want my money back](https://i.imgflip.com/nslxf.jpg)
 
-+++
+--- 
 - [TRUE] We can do that using traditional routing, vendors active probes, etc
 - [TRUE] this way we are separating our logic from forwarding elements
 - [TRUE] we can control different nodes from central control point
